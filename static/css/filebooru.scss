@@ -92,6 +92,8 @@ table.files{
 		font-style: italic;
 	}
 	.ext {
+		@include noselect;
+		cursor: default;
 		color: #ffffff;
 		background-color: #aaaaaa;
 		display: inline;
