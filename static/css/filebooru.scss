@@ -1,0 +1,107 @@
+$nav-height: 60px;
+$file-height: 50px;
+
+body {
+	margin: $nav-height 0px 0px 0px;
+}
+a {
+	color: #4a9dd9;
+	text-decoration: none;
+}
+#nav {
+	width: 100%;
+	position: fixed;
+	height: $nav-height;
+	background: #eaeaea;
+	top: 0px;
+	line-height: $nav-height;
+	font-size: 18px;
+	.pull-left {
+		margin-left: 20px;
+		float: left;
+	}
+	.pull-right {
+		margin-right: 20px;
+		float: right;
+	}
+	.title {
+		font-size: 20px;
+	}
+}
+table.files{
+	width: 100%;
+	background-color: #ffffff;
+	border-spacing: 0px;
+	tr {
+		border-bottom: 1px solid #000000;
+		background-color: #ecf2ff;
+	}
+	td {
+		height: $file-height;
+	}
+	td.extension {
+		padding-left: 20px;
+		width: 1px;
+	}
+	td.filename {
+		padding-left: 10px;
+	}
+	.ext {
+		color: #ffffff;
+		background-color: #aaaaaa;
+		display: inline;
+		padding: 5px 10px;
+		border-radius: 9001px;
+	}
+	.ext[title$=".flac"],
+	.ext[title$=".m4a"],
+	.ext[title$=".mp3"],
+	.ext[title$=".ogg"],
+	.ext[title$=".opus"],
+	.ext[title$=".wav"],
+	{
+		background-color: #bb00bb;
+	}
+	.ext[title$=".bmp"],
+	.ext[title$=".gif"],
+	.ext[title$=".ico"],
+	.ext[title$=".jpeg"],
+	.ext[title$=".jpg"],
+	.ext[title$=".png"],
+	{
+		background-color: #00bb00;
+	}
+	.ext[title$=".avi"],
+	.ext[title$=".flv"],
+	.ext[title$=".m4v"],
+	.ext[title$=".mkv"],
+	.ext[title$=".mov"],
+	.ext[title$=".mp4"],
+	.ext[title$=".ts"],
+	.ext[title$=".webm"],
+	{
+		background-color: #ff8800;
+	}
+	.ext[title$=".docx"],
+	.ext[title$=".epub"],
+	.ext[title$=".odp"],
+	.ext[title$=".ods"],
+	.ext[title$=".odt"],
+	.ext[title$=".pdf"],
+	.ext[title$=".txt"],
+	{
+		background-color: #00bbbb;
+	}
+	.ext[title$=".7z"],
+	.ext[title$=".bzip2"],
+	.ext[title$=".gz"],
+	.ext[title$=".rar"],
+	.ext[title$=".tar"],
+	.ext[title$=".zip"],
+	{
+		background-color: #bb0000;
+	}
+}
+table.files tr:nth-child(odd) {
+	background-color: #ffffff;
+}

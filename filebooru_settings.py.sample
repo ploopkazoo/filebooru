@@ -1,0 +1,15 @@
+# Set to True to allow the server to run
+fb_confd = False
+
+# Database connection information
+fb_conn = {
+    "hostname":"",
+    "database":"",
+    "username":"",
+    "password":"",
+}
+
+# Static values universal across all HTML templates
+fb_common = {
+    "instance":"Filebooru",
+}

@@ -1,0 +1,7 @@
+*.swp
+.sass-cache
+static/css/*.css
+static/css/*.css.map
+templates/*.html
+filebooru_settings.py
+__pycache__
