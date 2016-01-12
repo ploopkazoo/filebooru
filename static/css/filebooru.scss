@@ -1,12 +1,50 @@
 $nav-height: 60px;
 $file-height: 50px;
 
+@mixin noselect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@mixin buttonlink {
+	@include noselect;
+	display: inline-block;
+	padding: 13px 20px;
+	background-color: #000000;
+	cursor: pointer;
+	color: #ffffff;
+	margin-bottom: 10px;
+	user-select: none;
+	font-size: 18px;
+}
+
 body {
 	margin: $nav-height 0px 0px 0px;
 }
 a {
 	color: #4a9dd9;
 	text-decoration: none;
+}
+h2 {
+	padding: 20px;
+	margin-bottom: 0px;
+}
+.bluebuttonlink {
+	@include buttonlink;
+	background-color: #0077cc;
+	margin-left: 20px;
+}
+.greybuttonlink {
+	@include buttonlink;
+	background-color: #999999;
+}
+.mono {
+	font-family: monospace;
+	font-size: 14px;
 }
 #nav {
 	width: 100%;
@@ -104,4 +142,23 @@ table.files{
 }
 table.files tr:nth-child(odd) {
 	background-color: #ffffff;
+}
+table.fileinfo {
+	font-size: 18px;
+	margin-left: 20px;
+	border: 1px solid #aaaaaa;
+	border-spacing: 0px;
+	td {
+		border-left: 1px solid #aaaaaa;
+		border-top: 1px solid #aaaaaa;
+		padding: 5px;
+	}
+	td:first-child {
+		border-left: 0px;
+	}
+	tr:first-child {
+		td {
+			border-top: 0px;
+		}
+	}
 }

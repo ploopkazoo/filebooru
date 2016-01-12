@@ -1,0 +1,35 @@
+!!! 5
+%html
+	%head
+		%meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
+		%link{:rel => "stylesheet", :href => "/static/css/filebooru.css"}
+		%title {{ com.instance }}
+	%body
+		#nav
+			.pull-left
+				.title
+					{{ com.instance }}
+			.pull-right
+				<a>username123</a>
+		%h2 filename.ogg
+		%a.bluebuttonlink{:href => "#"}
+			Open
+		%a.greybuttonlink{:href => "#"}
+			Download
+		%table.fileinfo
+			%tr
+				%td Size
+				%td 316.89 KiB
+			%tr
+				%td Uploader
+				%td username123
+			%tr
+				%td Date uploaded
+				%td 2016-01-12 08:10:59
+			%tr
+				%td Tags
+				%td audio, vorbis
+			%tr
+				%td sha256
+				%td
+					.mono ec1e9a497b797bd67d497d1b4a6bffd9b0b8f1e367d4761036d3ce9d4204bf32
