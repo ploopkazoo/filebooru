@@ -8,3 +8,5 @@
 
     ./configure
     vim filebooru_settings.py
+
+This software is not yet intended for production
