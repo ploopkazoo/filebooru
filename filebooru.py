@@ -1,8 +1,15 @@
 #! /usr/bin/env python3
 
+import psycopg2
 from flask import Flask, request, render_template
 from filebooru_settings import fb_confd, fb_conn, fb_common
 
+conn = psycopg2.connect(
+    dbname=fb_conn["database"],
+    user=fb_conn["username"],
+    host=fb_conn["hostname"],
+    password=fb_conn["password"]
+)
 app = Flask(__name__)
 
 def human_size(bytecount):
