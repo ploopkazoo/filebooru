@@ -14,6 +14,7 @@ CREATE TABLE files (
 CREATE TABLE users (
 	userid BIGSERIAL,
 	username text UNIQUE NOT NULL,
+	admin boolean NOT NULL,
 	salt text NOT NULL,
 	hash text NOT NULL,
 	registered timestamp NOT NULL,
