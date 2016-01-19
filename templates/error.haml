@@ -9,11 +9,8 @@
 			.pull-left
 				.title
 					{{ com.instance }}
-			.pull-right
-				<a href="/user/me">{{ username }}</a>
-		%table.files
-			%tr
-				%td.extension
-					.ext{"title" => "sound.ogg"} OGG
-				%td.filename sound.ogg
-				%td.tags audio, vorbis
+		.messagebox
+			%h3
+				{{ message }}
+			%a{:href => "{{ return_to }}"}
+				%h2 Return

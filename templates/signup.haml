@@ -1,0 +1,16 @@
+!!! 5
+%html
+	%head
+		%meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
+		%link{:rel => "stylesheet", :href => "/static/css/filebooru.css"}
+		%title {{ com.instance }}
+	%body
+		#nav
+			.pull-left
+				.title
+					{{ com.instance }}
+		.centerbox#signin
+			%form{:method => "post", :action => "/register"}
+				%input{:type => "text", :placeholder => "Username", :name => "username"}
+				%input{:type => "password", :placeholder => "Password", :name => "password"}
+				%input{:type => "submit", :value => "Register"}

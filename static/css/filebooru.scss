@@ -171,3 +171,34 @@ table.fileinfo {
 		}
 	}
 }
+.centerbox {
+	width: 560px;
+	margin: 65px auto 10px auto;
+	input {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		height: 36px;
+		border: 0px;
+		margin-bottom: 5px;
+		padding: 0px 10px;
+		background-color: #eaeaea;
+		font-size: 18px;
+	}
+	input[type="submit"] {
+		background-color: #66b5d2;
+		color: #ffffff;
+	}
+}
+.messagebox {
+	width: 960px;
+	margin: 75px auto 10px auto;
+	h2 {
+		margin-top: 0px;
+		padding: 10px 0px;
+	}
+	h3 {
+		margin: 0px;
+		padding: 0px;
+	}
+}
