@@ -1,6 +1,8 @@
 CREATE TABLE files (
 	fileid BIGSERIAL,
 	filename text NOT NULL,
+	mime NOT NULL,
+	extension NOT NULL,
 	bytes bigint NOT NULL,
 	uploader bigint,
 	owner bigint,

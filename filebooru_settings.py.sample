@@ -1,6 +1,9 @@
 # Set to True to allow the server to run
 fb_confd = False
 
+# Location to store files
+fb_filedir = ""
+
 # Database connection information
 fb_conn = {
     "hostname":"",
@@ -12,4 +15,9 @@ fb_conn = {
 # Static values universal across all HTML templates
 fb_common = {
     "instance":"Filebooru",
+}
+
+fb_strings = {
+	"username_exists":"This username has already been taken, please try another.",
+	"incorrect_login":"The password provided was incorrect or the user does not exist.",
 }
