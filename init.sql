@@ -1,5 +1,5 @@
 CREATE TABLE files (
-	fileid BIGSERIAL,
+	fileid BIGSERIAL UNIQUE,
 	filename text NOT NULL,
 	mime text NOT NULL,
 	extension text NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE files (
 );
 
 CREATE TABLE users (
-	userid BIGSERIAL,
+	userid BIGSERIAL UNIQUE,
 	username text UNIQUE NOT NULL,
 	admin boolean NOT NULL,
 	salt text NOT NULL,
@@ -23,8 +23,7 @@ CREATE TABLE users (
 	groups bigint[] NOT NULL
 );
 
-INSERT INTO users VALUES (
-	1,
+INSERT INTO users (username, admin, salt, hash, registered, groups) VALUES (
 	'system',
 	true,
 	'',
@@ -34,14 +33,13 @@ INSERT INTO users VALUES (
 );
 
 CREATE TABLE groups (
-	groupid BIGSERIAL,
+	groupid BIGSERIAL UNIQUE,
 	groupname text UNIQUE NOT NULL,
 	creator bigint NOT NULL,
 	leader bigint NOT NULL
 );
 
-INSERT INTO groups VALUES (
-	1,
+INSERT INTO groups (groupname, creator, leader) VALUES (
 	'all',
 	1,
 	1
