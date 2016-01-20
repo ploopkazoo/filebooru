@@ -10,7 +10,7 @@
 				.title
 					{{ com.instance }}
 			.pull-right
-				<a>username123</a>
+				%a{:href => "/user/me"} {{ username }}
 		%h2 filename.ogg
 		%a.bluebuttonlink{:href => "#"}
 			Open

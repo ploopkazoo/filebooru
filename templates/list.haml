@@ -10,7 +10,7 @@
 				.title
 					{{ com.instance }}
 			.pull-right
-				<a href="/user/me">{{ username }}</a>
+				%a{:href => "/user/me"} {{ username }}
 		%table.files
 			%tr
 				%td.extension
