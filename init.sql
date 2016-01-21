@@ -40,7 +40,7 @@ CREATE TABLE groups (
 );
 
 INSERT INTO groups (groupname, creator, leader) VALUES (
-	'all',
+	'All',
 	1,
 	1
 );
