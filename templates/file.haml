@@ -8,10 +8,11 @@
 		#nav
 			.pull-left
 				.title
-					{{ com.instance }}
+					%a{:href => "/"} {{ com.instance }}
 			.pull-right
+				%a{:href => "/upload"} Upload
 				%a{:href => "/user/me"} {{ username }}
-		%h2 filename.ogg
+		%h2 {{ data[0] }}
 		%a.bluebuttonlink{:href => "#"}
 			Open
 		%a.greybuttonlink{:href => "#"}
@@ -19,17 +20,17 @@
 		%table.fileinfo
 			%tr
 				%td Size
-				%td 316.89 KiB
+				%td {{ data[1] | human_size }}
 			%tr
-				%td Uploader
-				%td username123
+				%td Owner
+				%td {{ data[2] }}
 			%tr
 				%td Date uploaded
-				%td 2016-01-12 08:10:59
+				%td {{ data[3] | datetime_string }}
 			%tr
 				%td Tags
-				%td audio, vorbis
+				%td {{ data[4] | comma_list }}
 			%tr
 				%td sha256
 				%td
-					.mono ec1e9a497b797bd67d497d1b4a6bffd9b0b8f1e367d4761036d3ce9d4204bf32
+					.mono {{ data[5] }}

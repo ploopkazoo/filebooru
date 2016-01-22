@@ -8,7 +8,7 @@
 		#nav
 			.pull-left
 				.title
-					{{ com.instance }}
+					%a{:href => "/"} {{ com.instance }}
 		.centerbox#signin
 			%form{:method => "post", :action => "/register"}
 				%input{:type => "text", :placeholder => "Username", :name => "username"}

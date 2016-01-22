@@ -9,8 +9,11 @@
 			.pull-left
 				.title
 					%a{:href => "/"} {{ com.instance }}
-		.messagebox
-			%h3
-				{{ message }}
-			%a{:href => "{{ return_to }}"}
-				%h2 Return
+			.pull-right
+				%a{:href => "/upload"} Upload
+				%a{:href => "/user/me"} {{ username }}
+		%h2 {{ data[1] }}
+		%table.fileinfo
+			%tr
+				%td Joined
+				%td {{ data[5] | date_string }}

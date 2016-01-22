@@ -8,12 +8,17 @@
 		#nav
 			.pull-left
 				.title
-					{{ com.instance }}
+					%a{:href => "/"} {{ com.instance }}
 			.pull-right
+				%a{:href => "/upload"} Upload
 				%a{:href => "/user/me"} {{ username }}
 		%table.files
+			{% for file in data %}
 			%tr
 				%td.extension
-					.ext{"title" => "sound.ogg"} OGG
-				%td.filename sound.ogg
-				%td.tags audio, vorbis
+					.ext{"title" => "{{ file[2] }}"} {{ file[1] }}
+				%td.filename
+					%a{:href => "/file/{{ file[0] }}"}
+						{{ file[2] }}
+				%td.tags {{ file[3] | comma_list }}
+			{% endfor %}

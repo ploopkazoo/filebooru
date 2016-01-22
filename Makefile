@@ -5,3 +5,5 @@ filebooru: static/css/filebooru.scss
 	haml templates/signin.haml templates/signin.html
 	haml templates/signup.haml templates/signup.html
 	haml templates/error.haml templates/error.html
+	haml templates/upload.haml templates/upload.html
+	haml templates/user.haml templates/user.html
