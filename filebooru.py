@@ -6,7 +6,8 @@ import hashlib
 import os
 
 import psycopg2
-from flask import Flask, request, render_template, make_response, redirect
+import magic
+from flask import Flask, request, render_template, make_response, redirect, Response
 from filebooru_settings import fb_confd, fb_filedir, fb_conn, fb_common, fb_strings
 
 conn = psycopg2.connect(
@@ -55,6 +56,13 @@ def name2id(username):
     cur.execute("SELECT userid FROM users WHERE username = %s", (username,))
     return cur.fetchone()
 
+def readfile(fileid):
+    cur = conn.cursor()
+    cur.execute("SELECT sha256, filename, mime FROM files WHERE fileid = %s", (fileid,))
+    filehash, filename, mime = cur.fetchone()
+    sourcepath = os.path.realpath(os.path.join(fb_filedir, filehash))
+    return open(sourcepath, "rb").read(), mime, filename
+
 @app.route("/")
 def render_root():
     username = getusername(request.cookies)
@@ -82,10 +90,12 @@ def render_me():
 
 @app.route("/user/<int:userid>")
 def render_user(userid):
+    username = getusername(request.cookies)
     cur = conn.cursor()
     cur.execute("SELECT * FROM users WHERE userid = %s", (userid,))
     response = cur.fetchone()
-    return render_template("user.html", com=fb_common, data=response)
+    return render_template("user.html", com=fb_common, data=response,
+        username=(username if username else "Login"))
 
 @app.route("/user/by-username/<username>")
 def render_user_by_username(username):
@@ -94,7 +104,7 @@ def render_user_by_username(username):
     response = cur.fetchone()
     return redirect("/user/%i" % response)
 
-@app.route("/file/<fileid>")
+@app.route("/file/<fileid>/")
 def render_file(fileid):
     username = getusername(request.cookies)
     cur = conn.cursor()
@@ -102,18 +112,31 @@ def render_file(fileid):
         files.tags, files.sha256 FROM files INNER JOIN users ON files.owner = \
         users.userid WHERE files.fileid = %s", (fileid,))
     response = cur.fetchone()
-    return render_template("file.html", com=fb_common, data=response,
+    return render_template("file.html", com=fb_common, data=response, fileid=fileid, filename=response[0],
         username=(username if username else "Login"))
+
+@app.route("/open/<fileid>/<fname>")
+def file_open(fileid, fname):
+    username = getusername(request.cookies)
+    data, mime, filename = readfile(fileid)
+    return Response(data, mimetype=mime,
+        headers={"Content-Disposition":"inline; filename=" + filename})
+
+@app.route("/download/<fileid>/<fname>")
+def file_download(fileid, fname):
+    username = getusername(request.cookies)
+    data, mime, filename = readfile(fileid)
+    return Response(data, mimetype=mime,
+        headers={"Content-Disposition":"attachment; filename=" + filename})
 
 @app.route("/upload")
 def render_upload():
     username = getusername(request.cookies)
     cur = conn.cursor()
     cur.execute("SELECT groupname, groupid FROM groups INNER JOIN \
-        (SELECT unnest(groups) FROM users WHERE userid = 2) unnested \
-        ON groups.groupid = unnested.unnest;")
+        (SELECT unnest(groups) FROM users WHERE userid = %s) unnested \
+        ON groups.groupid = unnested.unnest;", (name2id(username),))
     groups = cur.fetchall()
-    print(groups)
     return render_template("upload.html", com=fb_common, groups=groups,
         username=(username if username else "Login"))
 
@@ -162,22 +185,33 @@ def makefile():
     extension = (filename.split(".")[-1] if "." in filename else "")
     filedata = request.files["file"].stream.read()
     filehash = hashlib.sha256(filedata).hexdigest()
+    mime = magic.Magic(mime=True).from_buffer(filedata).decode("utf-8")
     destpath = os.path.realpath(os.path.join(fb_filedir, filehash))
     filelen = len(filedata)
     if not os.path.exists(destpath):
         open(destpath, "wb").write(filedata)
     cur = conn.cursor()
+    cur.execute("SELECT groupid FROM groups INNER JOIN \
+        (SELECT unnest(groups) FROM users WHERE userid = %s) unnested \
+        ON groups.groupid = unnested.unnest;", (name2id(username),))
+    groups = [x[0] for x in cur.fetchall()]
+    read, write = ([],[])
+    for g in groups:
+        if request.form.get("r" + str(g)):
+            read.append(g)
+        if request.form.get("w" + str(g)):
+            write.append(g)
     cur.execute("INSERT INTO files (filename, mime, extension, bytes, uploader, \
         owner, readgroups, writegroups, uploaded, tags, sha256) VALUES \
         (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING fileid", (
             filename,
-            "text/plain",
+            mime,
             extension,
             filelen,
             userid,
             userid,
-            [],
-            [],
+            read,
+            write,
             datetime.datetime.now(),
             filetags,
             filehash
