@@ -120,14 +120,14 @@ def file_open(fileid, fname):
     username = getusername(request.cookies)
     data, mime, filename = readfile(fileid)
     return Response(data, mimetype=mime,
-        headers={"Content-Disposition":"inline; filename=" + filename})
+        headers={"Content-Disposition":"inline"})
 
 @app.route("/download/<fileid>/<fname>")
 def file_download(fileid, fname):
     username = getusername(request.cookies)
     data, mime, filename = readfile(fileid)
     return Response(data, mimetype=mime,
-        headers={"Content-Disposition":"attachment; filename=" + filename})
+        headers={"Content-Disposition":"attachment"})
 
 @app.route("/upload")
 def render_upload():
@@ -138,6 +138,29 @@ def render_upload():
         ON groups.groupid = unnested.unnest;", (name2id(username),))
     groups = cur.fetchall()
     return render_template("upload.html", com=fb_common, groups=groups,
+        username=(username if username else "Login"))
+
+@app.route("/search", methods=["POST"])
+def search():
+    username = getusername(request.cookies)
+    cur = conn.cursor()
+    query = request.form["query"].split(" ")
+    mandatory = []
+    negated = []
+    for tag in query:
+        if tag.startswith("-"):
+            negated.append(tag[1:])
+        else:
+            mandatory.append(tag)
+    print(str(mandatory))
+    print(str(negated))
+    if mandatory and negated and (set(mandatory) & set(negated) != set()):
+        response = []
+    else:
+        print(cur.mogrify("SELECT fileid, extension, filename, tags FROM files WHERE tags @> %s AND NOT tags && %s ORDER BY uploaded DESC", (mandatory, negated)).decode("utf-8"))
+        cur.execute("SELECT fileid, extension, filename, tags FROM files WHERE tags @> %s AND NOT tags && %s ORDER BY uploaded DESC", (mandatory, negated))
+        response = cur.fetchall()
+    return render_template("list.html", data=response, com=fb_common,
         username=(username if username else "Login"))
 
 @app.route("/mock/<page>")

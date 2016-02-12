@@ -64,6 +64,15 @@ h2 {
 		a {
 			margin-left: 15px;
 		}
+		form {
+			display: inline;
+			input {
+				border: 0px;
+				background-color: #ffffff;
+				height: 24px;
+				padding: 5px 8px;
+			}
+		}
 	}
 	.title {
 		font-size: 20px;
@@ -86,7 +95,7 @@ table.files{
 	}
 	td.filename {
 		padding-left: 10px;
-		width: 1px;
+		width: 400px;
 	}
 	td.tags {
 		padding-left: 10px;
@@ -102,6 +111,7 @@ table.files{
 		display: inline;
 		padding: 5px 10px;
 		border-radius: 9001px;
+		text-transform: uppercase;
 	}
 	.ext[title$=".flac"],
 	.ext[title$=".m4a"],
