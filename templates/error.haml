@@ -7,10 +7,13 @@
 	%body
 		#nav
 			.pull-left
-				%form{:action => "/search", :method => "post"}
-					%input{:type => "text", :placeholder => "Search...", :name => "query"}
 				.title
 					%a{:href => "/"} {{ com.instance }}
+			.pull-right
+				%form{:action => "/search", :method => "post"}
+					%input{:type => "text", :placeholder => "Search...", :name => "query"}
+				%a{:href => "/upload"} Upload
+				%a{:href => "/user/me"} {{ username }}
 		.messagebox
 			%h3
 				{{ message }}

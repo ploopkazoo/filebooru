@@ -63,6 +63,15 @@ def readfile(fileid):
     sourcepath = os.path.realpath(os.path.join(fb_filedir, filehash))
     return open(sourcepath, "rb").read(), mime, filename
 
+def allowed_to_read(userid, fileid):
+    cur = conn.cursor()
+    cur.execute("SELECT ((SELECT groups::int[] FROM users WHERE userid = %s) \
+        && (SELECT readgroups::int[] FROM files WHERE fileid = %s) OR \
+        (SELECT count(*) = 1 FROM files WHERE owner = %s AND fileid = %s))", \
+        (userid, fileid, userid, fileid))
+    authorized = bool(cur.fetchone()[0])
+    return authorized
+
 @app.route("/")
 def render_root():
     username = getusername(request.cookies)
@@ -107,13 +116,16 @@ def render_user_by_username(username):
 @app.route("/file/<fileid>/")
 def render_file(fileid):
     username = getusername(request.cookies)
+    userid = name2id(username)
     cur = conn.cursor()
+    if not allowed_to_read(userid, fileid):
+        return render_template("error.html", com=fb_common, message=fb_strings["read_denied"])
     cur.execute("SELECT files.filename, files.bytes, users.username, files.uploaded, \
         files.tags, files.sha256 FROM files INNER JOIN users ON files.owner = \
         users.userid WHERE files.fileid = %s", (fileid,))
     response = cur.fetchone()
-    return render_template("file.html", com=fb_common, data=response, fileid=fileid, filename=response[0],
-        username=(username if username else "Login"))
+    return render_template("file.html", com=fb_common, data=response, fileid=fileid,
+        filename=response[0], username=(username if username else "Login"))
 
 @app.route("/open/<fileid>/<fname>")
 def file_open(fileid, fname):
@@ -162,10 +174,6 @@ def search():
         response = cur.fetchall()
     return render_template("list.html", data=response, com=fb_common,
         username=(username if username else "Login"))
-
-@app.route("/mock/<page>")
-def render_mock(page):
-    return render_template(page + ".html", com=fb_common)
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -242,14 +250,6 @@ def makefile():
     newid = cur.fetchone()[0]
     conn.commit()
     return redirect("/file/%i" % newid)
-
-@app.route("/qqq")
-def qqq():
-    print("------------")
-    for meme in sessions.keys():
-        print("%s   %s" % (meme, sessions[meme]))
-    print("------------")
-    return ""
 
 if __name__ == "__main__":
     app.run(debug=True)
