@@ -8,6 +8,7 @@ fb_filedir = ""
 fb_options = {
 	"allow_account_creation":True,
 	"all_files_public":False,
+	"flask_debug":False,
 }
 
 # Database connection information

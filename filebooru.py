@@ -285,4 +285,4 @@ def makefile():
     return redirect("/file/%i" % newid)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=fb_options["flask_debug"])
