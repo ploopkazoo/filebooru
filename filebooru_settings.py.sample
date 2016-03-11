@@ -24,9 +24,9 @@ fb_common = {
 }
 
 fb_strings = {
-	"username_exists":"This username has already been taken, please try another.",
-	"incorrect_login":"The password provided was incorrect or the user does not exist.",
-	"read_denied":"You do not have permission to view this file.",
+    "username_exists":"This username has already been taken, please try another.",
+    "incorrect_login":"The password provided was incorrect or the user does not exist.",
+    "read_denied":"You do not have permission to view this file.",
     "need_login":"Anonymous users cannot perform this action; please log in.",
     "reg_disabled":"Registration is currently disabled."
 }
