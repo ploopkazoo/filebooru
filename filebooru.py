@@ -192,7 +192,7 @@ def search():
     else:
         cur.execute("SELECT files.fileid, files.extension, files.filename, files.tags, \
         users.username FROM files INNER JOIN users ON users.userid = files.owner WHERE \
-        ((tags @> %s AND NOT tags && %s) OR filename LIKE '%%' || %s || '%%') ORDER BY \
+        ((tags @> %s AND NOT tags && %s) OR filename ILIKE '%%' || %s || '%%') ORDER BY \
         uploaded DESC", (mandatory, negated, " ".join(query)))
         response = cur.fetchall()
         print(response)
