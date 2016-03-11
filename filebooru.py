@@ -86,7 +86,9 @@ def allowed_to_read(userid, fileid):
 def render_root():
     username = getusername(request.cookies)
     cur = conn.cursor()
-    cur.execute("SELECT fileid, extension, filename, tags FROM files ORDER BY uploaded DESC LIMIT 25")
+    cur.execute("SELECT files.fileid, files.extension, files.filename, files.tags, \
+        users.username FROM files INNER JOIN users ON users.userid = files.owner \
+        ORDER BY uploaded DESC LIMIT 25")
     response = cur.fetchall()
     return render_template("list.html", data=response, com=fb_common,
         username=(username if username else "Login"))
@@ -188,7 +190,10 @@ def search():
     if mandatory and negated and (set(mandatory) & set(negated) != set()):
         response = []
     else:
-        cur.execute("SELECT fileid, extension, filename, tags FROM files WHERE ((tags @> %s AND NOT tags && %s) OR filename LIKE '%%' || %s || '%%') ORDER BY uploaded DESC", (mandatory, negated, " ".join(query)))
+        cur.execute("SELECT files.fileid, files.extension, files.filename, files.tags, \
+        users.username FROM files INNER JOIN users ON users.userid = files.owner WHERE \
+        ((tags @> %s AND NOT tags && %s) OR filename LIKE '%%' || %s || '%%') ORDER BY \
+        uploaded DESC", (mandatory, negated, " ".join(query)))
         response = cur.fetchall()
         print(response)
     return render_template("list.html", data=response, com=fb_common,
