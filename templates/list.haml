@@ -1,5 +1,8 @@
 !!! 5
 %html
+	/ {{ com.instance }} powered by Filebooru
+	/ Available under the terms of the GNU Affero General Public License 3 or later
+	/ https://gnu.org/licenses/agpl-3.0.txt
 	%head
 		%meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
 		%link{:rel => "stylesheet", :href => "/static/css/filebooru.css"}
@@ -14,6 +17,11 @@
 					%input{:type => "text", :placeholder => "Search...", :name => "query"}
 				%a{:href => "/upload"} Upload
 				%a{:href => "/user/me"} {{ username }}
+		{% if (data == []) %}
+		.messagebox
+			%h3
+				No results. 
+		{% else %}
 		%table.files
 			{% for file in data %}
 			%tr
@@ -24,3 +32,4 @@
 						{{ file[2] }}
 				%td.tags {{ file[3] | comma_list }}
 			{% endfor %}
+		{% endif %}

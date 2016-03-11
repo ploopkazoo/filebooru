@@ -18,6 +18,7 @@ $file-height: 50px;
 	cursor: pointer;
 	color: #ffffff;
 	margin-bottom: 10px;
+	margin-top: 12px;
 	user-select: none;
 	font-size: 18px;
 }
@@ -30,8 +31,13 @@ a {
 	text-decoration: none;
 }
 h2 {
-	padding: 20px;
+	padding: 20px 20px 5px 20px;
 	margin-bottom: 0px;
+}
+h4 {
+	padding: 0px 5px 5px 20px;
+	font-weight: normal;
+	margin-bottom: 10px;
 }
 .bluebuttonlink {
 	@include buttonlink;
@@ -207,6 +213,12 @@ table.sharing {
 		text-align: left;
 		padding-left: 10px;
 	}
+	tr.checksharing td {
+		padding: 5px 10px;
+	}
+}
+#sharingbox {
+	display: none;
 }
 .centerbox {
 	width: 560px;
@@ -225,6 +237,19 @@ table.sharing {
 	input[type="submit"] {
 		background-color: #66b5d2;
 		color: #ffffff;
+	}
+	textarea {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		height: 100px;
+		border: 0px;
+		margin-bottom: 5px;
+		padding: 6px 10px 0px 10px;
+		background-color: #eaeaea;
+		font-size: 18px;
+		font-family: sans-serif;
+		resize: none;
 	}
 }
 .messagebox {

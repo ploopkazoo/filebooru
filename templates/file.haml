@@ -1,9 +1,12 @@
 !!! 5
 %html
+	/ {{ com.instance }} powered by Filebooru
+	/ Available under the terms of the GNU Affero General Public License 3 or later
+	/ https://gnu.org/licenses/agpl-3.0.txt
 	%head
 		%meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
 		%link{:rel => "stylesheet", :href => "/static/css/filebooru.css"}
-		%title {{ com.instance }}
+		%title {{ data[0] }} - {{ com.instance }}
 	%body
 		#nav
 			.pull-left
@@ -15,6 +18,11 @@
 				%a{:href => "/upload"} Upload
 				%a{:href => "/user/me"} {{ username }}
 		%h2 {{ data[0] }}
+		{% if data[6] %}
+		{% autoescape false %}
+		%h4 {{ data[6] | fixnewlines }}
+		{% endautoescape %}
+		{% endif %}
 		%a.bluebuttonlink{:href => "/open/{{ fileid }}/{{ filename }}"}
 			Open
 		%a.greybuttonlink{:href => "/download/{{ fileid }}/{{ filename }}"}

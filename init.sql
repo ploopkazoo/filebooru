@@ -6,11 +6,13 @@ CREATE TABLE files (
 	bytes bigint NOT NULL,
 	uploader bigint,
 	owner bigint,
+	public boolean NOT NULL,
 	readgroups bigint[] NOT NULL,
 	writegroups bigint[] NOT NULL,
 	uploaded timestamp NOT NULL,
 	tags text[] NOT NULL,
-	sha256 char(64) NOT NULL
+	sha256 char(64) NOT NULL,
+	description text
 );
 
 CREATE TABLE users (
@@ -26,6 +28,15 @@ CREATE TABLE users (
 INSERT INTO users (username, admin, salt, hash, registered, groups) VALUES (
 	'system',
 	true,
+	'',
+	'',
+	TIMESTAMP 'now',
+	'{1}'
+);
+
+INSERT INTO users (username, admin, salt, hash, registered, groups) VALUES (
+	'Anonymous',
+	false,
 	'',
 	'',
 	TIMESTAMP 'now',
