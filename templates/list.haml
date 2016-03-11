@@ -27,6 +27,8 @@
 			%tr
 				%td.extension
 					.ext{"title" => "{{ file[2] }}"} {{ file[1] }}
+				%td.uploader
+					{{ file[4] }}
 				%td.filename
 					%a{:href => "/file/{{ file[0] }}"}
 						{{ file[2] }}

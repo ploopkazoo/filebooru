@@ -103,6 +103,13 @@ table.files{
 	td.filename {
 		padding-left: 10px;
 		width: 400px;
+		font-weight: bold;
+	}
+	td.uploader {
+		padding-left: 15px;
+		padding-right: 10px;
+		width: 1px;
+		color: #666666;
 	}
 	td.tags {
 		padding-left: 10px;
