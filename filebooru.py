@@ -8,6 +8,7 @@ import os
 import psycopg2
 import magic
 from flask import Flask, Markup, request, render_template, make_response, redirect, Response
+from werkzeug import secure_filename
 from filebooru_settings import fb_confd, fb_filedir, fb_conn, fb_common, fb_strings, fb_options
 
 conn = psycopg2.connect(
@@ -239,7 +240,7 @@ def makefile():
     userid = name2id(username)
     filetags = request.form["tags"].split(" ")
     description = request.form["description"]
-    filename = request.files["file"].filename
+    filename = request.files["file"].filename.replace("/", "_").replace("?", "_")
     extension = (filename.split(".")[-1] if "." in filename else "")
     filedata = request.files["file"].stream.read()
     filehash = hashlib.sha256(filedata).hexdigest()
